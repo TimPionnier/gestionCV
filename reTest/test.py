@@ -1,12 +1,20 @@
 import PyPDF2 as p2
 import nltk
 import re
+import glob
+import os
 
-PDFfile=open("cvtest3.pdf","rb")
+path='C:\\Users\zexal\Desktop\hackathon MC2i\gestionCV\CVechantillon'
+for folders in os.listdir(path):
+     print(folders)
+     name=str(folders)
+
+print('C:\\Users\zexal\Desktop\hackathon MC2i\gestionCV\CVechantillon\\'+name)
+PDFfile=open('C:\\Users\zexal\Desktop\hackathon MC2i\gestionCV\CVechantillon\\'+name,"rb")
 pdfReader= p2.PdfFileReader(PDFfile)
 x=pdfReader.getPage(0)
 y=pdfReader.getFields("a")
-print(x.getContents())
+xByline=[]
 domaine=""
 sentence=[]
 dico=[]
@@ -83,7 +91,32 @@ for value in sentence:
 results = list(map(int, dicoEXP))
 print("Nombre d'experience pro ",nbrExp)
 
-print("Temps d'experience pro",max(results)-min(results))
+print("Temps d'experience pro",2020-min(results))
+print(skill)
+
+
+
+
+
+def getPDFLine(pdf_file):
+        PDFfile = open(pdf_file,"rb")
+        pdf_reader = p2.PdfFileReader(PDFfile)
+        for page in pdf_reader.pages:
+            for line in page.extractText().splitlines():
+                yield line
+
+for line in getPDFLine("cvtest2.pdf"):
+    xByline.append(line)
+
+for i in range (0,len(xByline)):
+    if re.findall("\d{4}", xByline[i]):
+        #while(re.findall("\d{4}", xByline[i])):
+            print(xByline[i])
+
+
+
+
+
 
 
 #Recuperation d'une liste de mot se situant apres le mot cle
